@@ -1,0 +1,81 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   min-height: 100vh;
+   background-color: rgb(212, 212, 212);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.areas-container {
+   width: 80vh;
+   height: 80vh;
+   display: grid;
+   grid-template-columns: repeat(8, 1fr);
+   grid-template-rows: repeat(8, 1fr);
+   overflow: hidden;
+}
+
+.area {
+   position: relative;
+   background-color: rgb(58, 54, 31);
+}
+
+.pawn {
+   position: absolute;
+   top: calc(50% - 40%);
+   left: calc(50% - 40%);
+   height: 80%;
+   width: 80%;
+   height: 80%;
+
+   border-radius: 50%;
+   z-index: 1;
+}
+
+.AI-pawn {
+   background-color: rgb(202, 0, 0);
+}
+
+.player-pawn {
+   background-color: #fff;
+}
+
+.queen::before {
+   content: " ";
+   width: 50%;
+   height: 50%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   border: 5px solid rgba(0, 0, 0, 0.7);
+   border-radius: 50%;
+}
+
+.end-screen {
+   width: 100vw;
+   height: 100vh;
+   position: absolute;
+   background-color: rgba(0, 0, 0, 0.3);
+   z-index: 2;
+}
+
+.end-screen-btn {
+   width: 100px;
+   height: 40px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+.end-screen ~ .board {
+   filter: blur(2px);
+}
+
