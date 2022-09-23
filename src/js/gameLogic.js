@@ -163,16 +163,11 @@ const checkEmptyArea = nextAreas => {
 };
 
 const hitPawn = (hit, emptyArea) => {
-   let forced = null;
-   let hited = null;
-
    hit[0].remove();
    hit[1].remove();
    emptyArea.append(hit[0]);
-   forced = hit[0];
-   hited = hit[1];
 
-   return { forced, hited };
+   return { forced: hit[0], hited: hit[1] };
 };
 
 const forceBeating = (hittingList, choicedPawn = hittingList[0][0][0], choicedArea = hittingList[0][0][2][0]) => {
