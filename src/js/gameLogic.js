@@ -162,28 +162,33 @@ const checkEmptyArea = nextAreas => {
    return nextAreas.filter(area => area.childNodes.length === 0);
 };
 
-const forceBeating = (hittingList, choicedPawn = hittingList[0][0][0], choicedArea = hittingList[0][0][2][0]) => {
+const hitPawn = (hit, emptyArea) => {
    let forced = null;
    let hited = null;
 
-   //this can do with filter command
+   hit[0].remove();
+   hit[1].remove();
+   emptyArea.append(hit[0]);
+   forced = hit[0];
+   hited = hit[1];
+
+   return { forced, hited };
+};
+
+const forceBeating = (hittingList, choicedPawn = hittingList[0][0][0], choicedArea = hittingList[0][0][2][0]) => {
+   let ob = null;
+
    hittingList.forEach(hits => {
       hits.forEach(hit => {
          if (hit[0] === choicedPawn) {
             hit[2].forEach(emptyArea => {
-               if (emptyArea === choicedArea) {
-                  hit[0].remove();
-                  hit[1].remove();
-                  emptyArea.append(hit[0]);
-                  forced = hit[0];
-                  hited = hit[1];
-               }
+               if (emptyArea === choicedArea) ob = hitPawn(hit, emptyArea);
             });
          }
       });
    });
 
-   return { forced, hited };
+   return ob;
 };
 
 const tryChangePawnToQueen = pawn => {

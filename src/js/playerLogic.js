@@ -51,7 +51,7 @@ const deleteAiPawn = pawnToDelete => {
 const forceAnotherHit = (choicedArea, lookForAnotherPawn) => {
    const tryForceHit = forceBeating(lookForAnotherPawn, state.grabedPawn, choicedArea);
 
-   if (tryForceHit.forced !== null) {
+   if (tryForceHit !== null) {
       deleteAiPawn(tryForceHit.hited);
       const anotherHitArea = [findHittingForPawn(state.anotherHit, "AI-pawn")];
 
@@ -63,12 +63,16 @@ const forceAnotherHit = (choicedArea, lookForAnotherPawn) => {
    }
 };
 
-//make this more pure
 const playerMove = e => {
    const pawn = state.grabedPawn === null ? state.anotherHit : state.grabedPawn;
 
    const choicedArea = makeChoicedArea(e);
    const hittings = checkForHitting();
+
+   if (choicedArea === undefined) {
+      resetPawn();
+      return;
+   }
 
    if (state.anotherHit !== null) {
       const anotherHitArea = [findHittingForPawn(state.anotherHit, "AI-pawn")];
@@ -78,9 +82,10 @@ const playerMove = e => {
          resetPawn();
          return;
       }
-   }
 
-   if (hittings.length > 0 && state.anotherHit === null) {
+      state.anotherHit = null;
+      changeTurn(pawn);
+   } else if (hittings.length > 0 && state.anotherHit === null) {
       const tryForceBeat = forceBeating(hittings, state.grabedPawn, choicedArea);
 
       if (tryForceBeat !== null && tryForceBeat.forced !== null) {
@@ -93,11 +98,6 @@ const playerMove = e => {
 
       resetPawn();
       return;
-   }
-
-   if (state.anotherHit !== null) {
-      state.anotherHit = null;
-      changeTurn(pawn);
    } else {
       const pawnMoved = movePlayerPawn(pawn, choicedArea);
       if (pawnMoved) changeTurn(pawn);
