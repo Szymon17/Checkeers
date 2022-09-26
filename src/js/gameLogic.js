@@ -196,7 +196,7 @@ const tryChangePawnToQueen = pawn => {
 
 const tryEndGame = () => {
    const avilableAiPawns = state.AiPawns.filter(pawn => pawn !== null);
-   const avilablePlayerPawns = state.playerPawns.filter(pawn => pawn !== null); //mayby error with duble hit
+   const avilablePlayerPawns = state.playerPawns.filter(pawn => pawn !== null);
    const pawns = state.playerTurn === true ? state.playerPawns : state.AiPawns;
    const pawnWithavilableMove = [];
 
@@ -209,10 +209,13 @@ const tryEndGame = () => {
 
    const hittings = checkForHitting();
 
-   if (avilableAiPawns.length === 0 || avilablePlayerPawns.length === 0 || (pawnWithavilableMove.length === 0 && hittings.length === 0)) {
-      renderEndScreen();
-      state.endGame = true;
-   }
+   if (avilableAiPawns.length === 0 || avilablePlayerPawns.length === 0 || (pawnWithavilableMove.length === 0 && hittings.length === 0)) return true;
+   else return false;
 };
 
-export { checkForHitting, forceBeating, findHittingForPawn, tryChangePawnToQueen, tryEndGame, areasToMove };
+const endGame = params => {
+   renderEndScreen();
+   state.endGame = true;
+};
+
+export { checkForHitting, forceBeating, findHittingForPawn, tryChangePawnToQueen, tryEndGame, endGame, areasToMove };

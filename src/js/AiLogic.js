@@ -1,5 +1,5 @@
 import state from "./state";
-import { checkForHitting, findHittingForPawn, forceBeating, tryChangePawnToQueen, tryEndGame, areasToMove } from "./gameLogic.js";
+import { checkForHitting, findHittingForPawn, forceBeating, tryChangePawnToQueen, tryEndGame, areasToMove, endGame } from "./gameLogic.js";
 
 const takePawnsWithAvilableMove = () => {
    const pawnWithavilableMove = [];
@@ -20,9 +20,16 @@ const getRandomPawn = pawns => {
 };
 
 const chnageTurn = () => {
-   tryEndGame();
+   const forAiTry = tryEndGame();
+   const aiHittingList = checkForHitting();
+
    state.playerTurn = true;
-   tryEndGame();
+
+   const forPlayerTry = tryEndGame();
+   const playerHittingList = checkForHitting();
+
+   if (forAiTry === true && playerHittingList.length === 0) endGame();
+   else if (forPlayerTry === true && aiHittingList.length === 0) endGame();
 };
 
 const getRandomArea = pawn => {

@@ -1,5 +1,5 @@
 //code
-import style from "./css/style.css";
+import "./css/style.css";
 
 import state from "./js/state";
 import createBoard from "./js/renderBoard";
