@@ -5,10 +5,7 @@ const takePawnsWithAvilableMove = () => {
    const pawnWithavilableMove = [];
 
    state.AiPawns.forEach(pawn => {
-      if (pawn !== null) {
-         const areas = areasToMove(pawn);
-         if (areas.length > 0) pawnWithavilableMove.push(pawn);
-      }
+      if (pawn !== null && areasToMove(pawn).length > 0) pawnWithavilableMove.push(pawn);
    });
 
    return pawnWithavilableMove;
