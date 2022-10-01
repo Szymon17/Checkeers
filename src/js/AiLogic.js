@@ -79,7 +79,7 @@ const aiInit = () => {
          const tryForceBeat = forceBeating(hittings);
          deletePlayerPawn(tryForceBeat.hited);
 
-         const nextHit = [findHittingForPawn(tryForceBeat.forced, "player-pawn")]; //new rule
+         const nextHit = [findHittingForPawn(tryForceBeat.forced, "player-pawn")];
 
          if (nextHit[0].length > 0) {
             state.anotherHit = tryForceBeat.forced;
