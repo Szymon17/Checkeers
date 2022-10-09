@@ -116,23 +116,20 @@ const findHittingForPawn = (pawn, enemyPawnName) => {
   const backAreas = pawn.dataset.type === "pawn" ? [] : aroundAreas.backAreas;
   const hit = [];
 
-  [...nextAreas, ...backAreas].forEach(site => {
-    const avilableAreas = [];
-    let sawPawn = false;
-    let enemyPawn = null;
-    let repeat = 0;
+  [...nextAreas, ...backAreas].forEach(arr => {
+    let hited = false;
 
-    site.forEach(area => {
-      const pawnOnVision = area.lastChild;
+    for (let i = 0; i < arr.length; i++) {
+      const enemyPawn = arr[i].lastChild;
 
-      if (pawnOnVision !== null && pawnOnVision.dataset.name === enemyPawnName && repeat === 0) {
-        sawPawn = true;
-        repeat++;
-        enemyPawn = pawnOnVision;
-      } else if (sawPawn && pawnOnVision === null && repeat === 1) avilableAreas.push(area);
-      else if (pawnOnVision !== null) repeat++;
-    });
-    if (avilableAreas.length > 0 && enemyPawn !== null) hit.push([pawn, enemyPawn, avilableAreas]);
+      if (hited) break;
+
+      if (enemyPawn !== null && enemyPawn.dataset.name === enemyPawnName && arr[i + 1] !== undefined && arr[i + 1].lastChild === null) {
+        hit.push([pawn, enemyPawn, arr[i + 1]]);
+        hited = true;
+      } else if (enemyPawn !== null && enemyPawn.dataset.name === enemyPawnName) hited = true;
+      else if ((enemyPawn !== null && enemyPawn.dataset.name !== enemyPawnName) || hited) break;
+    }
   });
 
   return hit;
@@ -174,15 +171,13 @@ const hitPawn = (hit, emptyArea) => {
   return { forced: hit[0], hited: hit[1] };
 };
 
-const forceBeating = (hittingList, choicedPawn = hittingList[0][0][0], choicedArea = hittingList[0][0][2][0]) => {
+const forceBeating = (hittingList, choicedPawn = hittingList[0][0][0], choicedArea = hittingList[0][0][2]) => {
   let ob = null;
 
   hittingList.forEach(hits => {
     hits.forEach(hit => {
       if (hit[0] === choicedPawn) {
-        hit[2].forEach(emptyArea => {
-          if (emptyArea === choicedArea) ob = hitPawn(hit, emptyArea);
-        });
+        if (hit[2] === choicedArea) ob = hitPawn(hit, hit[2]);
       }
     });
   });
