@@ -1,7 +1,7 @@
 # Thai checkers
 
 
-#How to start? -You can clone repository and start (npm i) in your node.js -If you don't want install, you can look of dist folder or try this link https://szymon17.github.io/Checkers/dist/
+#How to start? -You can clone repository and start (npm i) in your node.js -If you don't want install, you can look of dist folder
 
 #Rules
   -Pawns move and capture only forward, diagonally.
